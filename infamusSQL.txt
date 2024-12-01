@@ -1,0 +1,35 @@
+create database infamus;
+
+use infamus;
+
+create table estudante(
+ codigo_estudante int primary key auto_increment,
+ nome_estudante varchar(30),
+ matricula_estudante varchar(20) unique,
+ endereco_estudante varchar(56),
+ telefone_estudante varchar(20),
+ email_estudante varchar(30),
+ ano_entrada int);
+
+create table relato(
+ codigo_relato int primary key auto_increment,
+ data_relato date,
+ descricao blob,
+
+ codigo_fk_estudante int,
+
+ constraint fk_estudante foreign key (codigo_fk_estudante) references estudante(codigo_estudante)
+);
+
+create table professor(
+    codigo_professor int primary key auto_increment,
+    nome_professor varchar(30),
+    email_professor varchar(30),
+    senha_professor varchar(30)
+);
+
+alter table relato add codigo_fk_professor int;
+
+alter table relato add constraint fk_professor 
+foreign key (codigo_fk_professor) references professor(codigo_professor);
+
