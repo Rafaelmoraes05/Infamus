@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Seus relatos</title>
+</head>
+<body>
+
+	<div th:insert="~{viewFragments :: menu}"></div>
+
+	<p class="h4" th:if="${relatos == null}">O estudante não está cadastrado</p>
+	
+	<p class="h4" th:if="${relatos.size() == 0}" >O bom estudante
+	<i th:text="${estudante.nome}"></i> não possui relatos cadastrados</p>
+	
+	<p class="h4" th:if="${relatos.size() > 0}">O mau estudante <i th:text="${estudante.nome}"></i>
+		possui <span th:text="${relatos.size()}"></span> relatos</p>
+	
+	<button class="btn btn-primary" data-bs-toggle="modal"
+		data-bs-target="#modalCadastro" style="margin: 20px" >inserir novo relato</button>
+		
+		
+		<div style="display: flex; flex-flow: row wrap">
+			
+			<div th:each="relato: ${relatos}">
+			
+				<div class="card" style="margin: 20px">
+					<div class="card-header">
+						Data do Relato: <span th:text="${relato.dataFormatada}"></span>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<tr><th>relato:</th></tr>
+							<tr><td><span th:text="${relato.descricao}"></span></td></tr>
+						</table>
+					</div>
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		
+		<div class="modal fade" id="modalCadastro" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar
+						um novo estudante</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/relatos/save}" method="post"
+						th:object="${relato}">
+						<input type="hidden" name="codigoEstudante" th:value="${estudante.codigo}"/>
+						<table class=table>
+							<tr>
+								<th>Data:</th>
+								<td><input type=text name="dataFormatada" th:placeholder="*{dataFormatada}" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Descrição:</th>
+								<td><textarea type=text th:field="*{descricao}" class="form-control" ></textarea></td>
+							</tr>
+						</table>
+						<button type="submit" class="btn btn-primary">cadastrar</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modalCadastro2" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar
+						um novo estudante</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/relatos/save2}" method="post"
+						th:object="${relato}">
+						<input type="hidden" name="estudante.codigo" th:value="${estudante.codigo}"/>
+						<table class=table>
+							<tr>
+								<th>Data:</th>
+								<td><input type=text name="dataFormatada" th:placeholder="*{dataFormatada}" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Descrição:</th>
+								<td><textarea type=text th:field="*{descricao}" class="form-control" ></textarea></td>
+							</tr>
+						</table>
+						<button type="submit" class="btn btn-primary">cadastrar</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

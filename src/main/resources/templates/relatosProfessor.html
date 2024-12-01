@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatos do Professor</title>
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 20px;
+        }
+        h2 {
+            text-align: center; /* Centraliza o H2 */
+            font-size: 2em; /* Aumenta o tamanho da fonte */
+            color: #1f3b73; /* Cor personalizada para o título */
+            border-bottom: 2px solid #000000; /* Linha abaixo do H2 */
+            padding-bottom: 10px; /* Espaçamento abaixo do H2 */
+            margin-bottom: 30px; /* Espaçamento entre o H2 e o restante do conteúdo */
+        }
+    </style>
+</head>
+<body>
+
+<div th:insert="~{viewFragments :: menu}"></div>
+
+<h2>Seus Relatos</h2>
+
+<div th:if="${relatos == null || #lists.isEmpty(relatos)}">
+    <p>Você não possui relatos cadastrados.</p>
+</div>
+
+<div style="display: flex; flex-flow: row wrap">
+    <div th:each="relato : ${relatos}">
+        <div class="card" style="margin: 20px">
+            <div class="card-header">
+                Data do Relato: <span th:text="${relato.dataFormatada}"></span>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr><th>Relato:</th></tr>
+                    <tr><td><span th:text="${relato.descricao}"></span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

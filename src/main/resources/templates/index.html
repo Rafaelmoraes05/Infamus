@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Infamus</title>
+
+</head>
+<body>
+
+	<div th:insert="~{viewFragments :: menu}"></div>
+	<div th:if="${msg}">
+		<p th:text="${msg}"></p>
+	</div>
+	<div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+		<button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalCadastro" style="margin: 10px 0px">Cadastrar Estudantes</button>
+	</div>
+	<div style="display: flex; flex-flow: row wrap; width: 100%">
+	
+		<div th:each="estudante : ${estudantes}" th:object="${estudante}" 
+			style="
+			 padding: 1% 5%">
+
+			<div class="card">
+				<div class="card-header">
+					<p >
+						Nome do estudante: </b><i th:text="*{nome}" style="font-weight: bold"></i>
+					</p>
+				</div>
+				<div class="card-body">
+				
+					<table class="table">
+						<tr>
+							<th>Matrícula</th>
+							<th>Telefone</th>
+						</tr>
+						<tr>
+							<td><p th:text="*{matricula}"></p> </td>
+							<td><p th:text="*{telefone}"></p></td>
+						</tr>
+						<tr>
+							<th>e-mail</th>
+							<th>Ano de entrada</th>
+						</tr>
+						<tr>
+							<td><p th:text="*{email}"></p> </td>
+							<td><p th:text="*{anoEntrada}"></p></td>
+						</tr>
+						<tr>
+							<th colSpan="2">Endereço</th>
+						</tr>
+						<tr>
+							<td colSpan="2"><p th:text="*{endereco}"></p> </td>
+							
+						</tr>
+						
+					</table>
+				
+				</div>
+				<div class="card-footer">
+					<a href="#" th:href="@{/relatos/{codigo}(codigo=*{codigo})}" class="btn btn-danger">Relatar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal de cadastro	/-->
+	<div class="modal fade" id="modalCadastro" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar
+						um novo estudante</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="/estudante/cadastro" method="post">
+						<table class=table>
+							<tr>
+								<th>Nome:</th>
+								<td><input type=text name="nome" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Matricula:</th>
+								<td><input type=text name="matricula" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Telefone:</th>
+								<td><input type=text name="telefone" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Endereço:</th>
+								<td><input type=text name="endereco" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>e-mail:</th>
+								<td><input type=text name="email" class="form-control" /></td>
+							</tr>
+							<tr>
+								<th>Ano de ingresso:</th>
+								<td><input type=text name="anoEntrada" class="form-control" /></td>
+							</tr>
+						</table>
+						<button type="submit" class="btn btn-primary">cadastrar</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
